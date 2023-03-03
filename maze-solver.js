@@ -68,20 +68,4 @@ class MazeSolver {
   }
 }
 
-module.export = MazeSolver;
-
-// PLAYING WITH ALGO
-
-const matrix = [
-  [0, 1, 1],
-  [1, 0, 1],
-  [1, 1, 1],
-  [1, 0, 1],
-  [1, 1, 1],
-];
-
-const myObj = new MazeSolver(matrix);
-
-const start = [0, 2];
-const end = [4, 2];
-myObj.findShortestPath(start, end);
+module.exports = MazeSolver;
