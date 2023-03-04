@@ -1,5 +1,5 @@
 class MazeSolver {
-  constructor() {
+  constructor(matrix) {
     this.matrix = matrix;
   }
 
@@ -9,9 +9,9 @@ class MazeSolver {
     const endX = end[0];
     const endY = end[1];
 
-    //if start or end value is 0, return
-    if (matrix[startX][startY] === 0 || matrix[endX][endY] === 0) {
-      throw new Error("No path for this starting point!");
+    // If start or end point is 0, throw an error
+    if (this.matrix[startX][startY] === 0 || this.matrix[endX][endY] === 0) {
+      throw new Error("Choose a valid starting or ending point");
     }
 
     // Starting Breadth First Search algorithm
@@ -25,8 +25,7 @@ class MazeSolver {
 
       //find destination
       if (p.x === endX && p.y === endY) {
-        this.formatResult(p);
-        break;
+        return this.formatResult(p);
       }
 
       // Moving up
@@ -38,28 +37,30 @@ class MazeSolver {
       // Moving right
       this.visitNode(visited, queue, p.x, p.y + 1, p);
     }
+
+    return "No path found :(";
   }
 
   formatResult(result) {
-    if (!result) return console.log("No path bro' :(");
     const path = [];
     let p = result;
     do {
-      path.unshift(`(${p.x}, ${p.y})`);
+      path.unshift([p.x, p.y]);
     } while ((p = p.prev) != null);
-    console.log(path);
+    return path;
   }
 
   visitNode(visited, queue, x, y, parent) {
     // Out of matrix boundary
-    if (x < 0 || y < 0 || x >= matrix.length || y >= matrix.length) return;
+    if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix.length)
+      return;
 
     // Invalid path
-    if (matrix[x][y] === 0) return;
+    if (this.matrix[x][y] === 0) return;
 
     let newNode = { x, y };
     // Updating distance, previous node and populating queue
-    if (matrix[x][y] !== 0 && !visited.has(newNode)) {
+    if (this.matrix[x][y] !== 0 && !visited.has(newNode)) {
       newNode.dist = parent.dist + 1;
       newNode.prev = parent;
       queue.push(newNode);
