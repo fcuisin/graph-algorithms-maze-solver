@@ -1,4 +1,4 @@
-const MazeSolver = require("./maze-solver");
+const MazeSolver = require("./mazeSolverShortestPath");
 
 const INVALID_POINT = "Choose a valid starting or ending point";
 const NO_PATH_FOUND = "No path found :(";
