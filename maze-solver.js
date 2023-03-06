@@ -25,7 +25,7 @@ class MazeSolver {
 
       //find destination
       if (p.x === endX && p.y === endY) {
-        return this.formatResult(p);
+        return this.formatAndPrintResult(p);
       }
 
       // Moving up
@@ -41,7 +41,7 @@ class MazeSolver {
     return "No path found :(";
   }
 
-  formatResult(result) {
+  formatAndPrintResult(result) {
     const path = [];
     let p = result;
     do {
@@ -52,7 +52,7 @@ class MazeSolver {
 
   visitNode(visited, queue, x, y, parent) {
     // Out of matrix boundary
-    if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix.length)
+    if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix[x].length)
       return;
 
     // Invalid path
@@ -60,12 +60,12 @@ class MazeSolver {
 
     let newNode = { x, y };
     // Updating distance, previous node and populating queue
-    if (this.matrix[x][y] !== 0 && !visited.has(newNode)) {
+    if (this.matrix[x][y] !== 0 && !visited.has(JSON.stringify(newNode))) {
       newNode.dist = parent.dist + 1;
       newNode.prev = parent;
       queue.push(newNode);
     }
-    visited.add(newNode);
+    visited.add(JSON.stringify({ x, y }));
   }
 }
 
